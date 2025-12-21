@@ -3,16 +3,14 @@ package com.example.pcdb.handler;
 import com.example.pcdb.command.DeleteAllUsersCommand;
 import com.example.pcdb.repository.UserRepository;
 
-import java.util.Optional;
+import java.util.Objects;
 
 public final class DeleteAllUsersHandler implements CommandHandler<DeleteAllUsersCommand> {
 
     private final UserRepository repo;
 
     public DeleteAllUsersHandler(final UserRepository repo) {
-        this.repo =
-                Optional.ofNullable(repo)
-                        .orElseThrow(() -> new IllegalArgumentException("repository must not be null"));
+        this.repo = Objects.requireNonNull(repo, "User repository must not be null");
     }
 
     @Override

@@ -3,8 +3,7 @@ package com.example.pcdb.db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Optional;
+import java.util.Objects;
 
 public final class Database {
 
@@ -20,9 +19,7 @@ public final class Database {
     private final String jdbcUrl;
 
     public Database(final String jdbcUrl) {
-        this.jdbcUrl =
-                Optional.ofNullable(jdbcUrl)
-                        .orElseThrow(() -> new IllegalArgumentException("JDBC url must not be null"));
+        this.jdbcUrl = Objects.requireNonNull(jdbcUrl, "JDBC url must not be null");
     }
 
     public Connection getConnection() throws SQLException {

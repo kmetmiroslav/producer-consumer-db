@@ -6,7 +6,7 @@ import com.example.pcdb.model.User;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 
 public final class JdbcUserRepository implements UserRepository {
 
@@ -17,15 +17,12 @@ public final class JdbcUserRepository implements UserRepository {
     private final Database db;
 
     public JdbcUserRepository(final Database db) {
-        this.db =
-                Optional.ofNullable(db)
-                        .orElseThrow(() -> new IllegalArgumentException("Database must not be null"));
+        this.db = Objects.requireNonNull(db, "Database must not be null");
     }
 
     @Override
     public void add(final User user) throws SQLException {
-        Optional.ofNullable(user)
-                .orElseThrow(() -> new IllegalArgumentException("User must not be null"));
+        Objects.requireNonNull(user, "User must not be null");
 
         try (final var conn = db.getConnection();
              final var ps = conn.prepareStatement(SQL_USER_ADD))

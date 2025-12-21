@@ -5,6 +5,7 @@ import com.example.pcdb.handler.CommandHandler;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -17,10 +18,7 @@ public final class CommandDispatcher {
     private final Map<Class<? extends Command>, CommandHandler<?>> handlersByType;
 
     public CommandDispatcher(final List<CommandHandler<?>> handlers) {
-
-        Optional.ofNullable(handlers)
-                .filter(list -> !list.isEmpty())
-                .orElseThrow(() -> new IllegalArgumentException("Command handlers must not be null or empty"));
+        Objects.requireNonNull(handlers, "Command handlers must not be null or empty");
 
         this.handlersByType =
                 handlers
@@ -35,8 +33,7 @@ public final class CommandDispatcher {
     }
 
     public void dispatch(final Command command) throws Exception {
-        Optional.ofNullable(command)
-                .orElseThrow(() -> new IllegalArgumentException("Command must not be null"));
+        Objects.requireNonNull(command, "Command must not be null");
 
         final var handler =
                 Optional.ofNullable(handlersByType.get(command.getClass()))

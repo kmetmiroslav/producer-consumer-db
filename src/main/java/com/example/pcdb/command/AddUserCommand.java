@@ -2,12 +2,11 @@ package com.example.pcdb.command;
 
 import com.example.pcdb.model.User;
 
-import java.util.Optional;
+import java.util.Objects;
 
 public record AddUserCommand(User user) implements Command {
 
     public AddUserCommand {
-        Optional.ofNullable(user)
-                .orElseThrow(() -> new IllegalArgumentException("User must not be null"));
+        Objects.requireNonNull(user, "User must not be null");
     }
 }

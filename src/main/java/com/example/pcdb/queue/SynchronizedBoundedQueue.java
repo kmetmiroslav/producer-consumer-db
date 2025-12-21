@@ -2,7 +2,7 @@ package com.example.pcdb.queue;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Optional;
+import java.util.Objects;
 
 /**
  * <p>Class representing FIFO queue using Deque internally.</p>
@@ -26,8 +26,7 @@ public final class SynchronizedBoundedQueue<T> implements BoundedQueue<T> {
 
     @Override
     public void put(final T item) throws InterruptedException {
-        Optional.ofNullable(item)
-                .orElseThrow(() -> new IllegalArgumentException("Item must not be null"));
+        Objects.requireNonNull(item, "Item must not be null");
 
         synchronized (lock) {
 

@@ -3,16 +3,14 @@ package com.example.pcdb.handler;
 import com.example.pcdb.command.AddUserCommand;
 import com.example.pcdb.repository.UserRepository;
 
-import java.util.Optional;
+import java.util.Objects;
 
 public final class AddUserHandler implements CommandHandler<AddUserCommand> {
 
     private final UserRepository repo;
 
     public AddUserHandler(final UserRepository repo) {
-        this.repo =
-                Optional.ofNullable(repo)
-                        .orElseThrow(() -> new IllegalArgumentException("repository must not be null"));
+        this.repo = Objects.requireNonNull(repo, "UserRepository must not be null");
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.example.pcdb.command.ShutdownCommand;
 import com.example.pcdb.dispatch.CommandDispatcher;
 import com.example.pcdb.queue.BoundedQueue;
 
-import java.util.Optional;
+import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
 /**
@@ -31,17 +31,11 @@ public final class CommandConsumer implements Runnable {
                            final CommandDispatcher dispatcher,
                            final BooleanSupplier keepRunning)
     {
-        this.queue =
-                Optional.ofNullable(queue)
-                        .orElseThrow(() -> new IllegalArgumentException("Queue must not be null"));
+        this.queue = Objects.requireNonNull(queue, "Queue must not be null");
 
-        this.dispatcher =
-                Optional.ofNullable(dispatcher)
-                        .orElseThrow(() -> new IllegalArgumentException("Dispatcher must not be null"));
+        this.dispatcher = Objects.requireNonNull(dispatcher, "Dispatcher must not be null");
 
-        this.keepRunning =
-                Optional.ofNullable(keepRunning)
-                        .orElseThrow(() -> new IllegalArgumentException("KeepRunning flag supplier must not be null"));
+        this.keepRunning = Objects.requireNonNull(keepRunning, "Keep running supplier must not be null");
     }
 
     @Override
